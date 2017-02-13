@@ -1,2 +1,2 @@
 # netcontrol
-Cross platform app for running and logging ham radio nets
+Tool for ham radio net controllers to run and log a net
