@@ -3,12 +3,35 @@
 import yaml
 
 class Net(yaml.YAMLObject):
+
+    """Model class for a ham radio net
+    
+    Capture the core data for a ham radio net. See Session for a specific instance of a net.
+    
+    Attributes
+    ----------
+    description: str
+        The operators FCC issued call sign
+    schedule: str
+        When this net occurs, i.e. "Every Thursday at 8:30pm"
+    frequency: str
+        Frequency where the net occurs, i.e. "447.100- T100Hz"
+    manager: Operator
+        The Operator who is the manager of this net
+    operators: dict
+        The Operators who have been seen on this net
+
+    """
+
     yaml_loader = yaml.SafeLoader
     yaml_tag = '!Net'
     
     def __init__(self):
+        self.description = None
+        self.schedule = None
+        self.frequency = None
+        self.manager = None
         self.operators = {}
-        self.description = ''
 
     def add_operator(self,operator):
         # don't add operators without a callsign

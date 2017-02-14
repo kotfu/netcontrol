@@ -5,8 +5,23 @@
 import yaml
 
 class Operator(yaml.YAMLObject):
+
+    """Model class for a ham radio operator
+    
+    Attributes
+    ----------
+    callsign: str
+        The operators FCC issued call sign
+    firstname: str
+        The operator's first given name
+    lastname: str
+        The operator's surname or family name
+    """
+
     yaml_loader = yaml.SafeLoader
     yaml_tag = '!Operator'
     
     def __init__(self,callsign=None):
         self.callsign = callsign
+        self.firstname = None
+        self.lastname = None
