@@ -11,9 +11,7 @@ class Net(yaml.YAMLObject):
         self.description = ''
 
     def add_operator(self,operator):
-        # make sure the operator's call sign isn't already in
-        # the roster, and then add it
-        if not operator.callsign:
-            return
-        
-        self.operators[operator.callsign] = operator
+        # don't add operators without a callsign
+        if operator.callsign:
+            # use the callsign as the key = no duplicates
+            self.operators[operator.callsign] = operator
