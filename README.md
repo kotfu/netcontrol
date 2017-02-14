@@ -20,12 +20,17 @@ or use pyenv
 $ env PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install -v 3.5.3
 ```
 
-#### Install the other dependencies
+You will also need pip and setuptools:
 
 ```sh
 $ pip3 install -U pip setuptools
-$ pip3 install pyqt5
-$ pip3 install PyInstaller
+```
+
+#### Install the other dependencies
+
+```sh
+$ python3 setup.py develop
+$ pip install -e .[dev,test]
 ```
 
 ## Build a binary distribution
