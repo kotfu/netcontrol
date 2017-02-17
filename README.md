@@ -17,7 +17,9 @@ $ brew install python
 or use pyenv
 
 ```sh
+$ brew install pyenv
 $ env PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install -v 3.5.3
+$ pyenv shell 3.5.3
 ```
 
 You will also need pip and setuptools:
