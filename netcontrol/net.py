@@ -6,12 +6,13 @@ class Net(yaml.YAMLObject):
 
     """Model class for a ham radio net
     
-    Capture the core data for a ham radio net. See Session for a specific instance of a net.
+    Capture the core data for a ham radio net. See Session for a
+    specific instance of a net.
     
     Attributes
     ----------
     description: str
-        The operators FCC issued call sign
+        Name of this net
     schedule: str
         When this net occurs, i.e. "Every Thursday at 8:30pm"
     frequency: str
