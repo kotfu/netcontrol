@@ -35,6 +35,12 @@ $ python3 setup.py develop
 $ pip install -e .[dev,test]
 ```
 
+## Run from the command line
+
+```sh
+$ python3 -m netcontrol
+```
+
 ## Build a binary distribution
 
 ### OSX/MacOS
