@@ -1,10 +1,11 @@
 # Copyright (c) 2017 Jared Crapo, K0TFU
 
-import yaml
+import persistent
+import persistent.mapping
 
-class Net(yaml.YAMLObject):
+class Net(persistent.Persistent):
 
-    """Model class for a ham radio net
+    """Persistable class for a ham radio net
     
     Capture the core data for a ham radio net. See Session for a
     specific instance of a net.
@@ -24,18 +25,16 @@ class Net(yaml.YAMLObject):
 
     """
 
-    yaml_loader = yaml.SafeLoader
-    yaml_tag = '!Net'
-    
     def __init__(self):
         self.description = None
         self.schedule = None
         self.frequency = None
         self.manager = None
-        self.operators = {}
+        self.operators = persistent.mapping.PersistentMapping()
 
     def add_operator(self,operator):
         # don't add operators without a callsign
         if operator.callsign:
             # use the callsign as the key = no duplicates
+            # self.operators[operator.callsign] = operator
             self.operators[operator.callsign] = operator

@@ -2,9 +2,9 @@
 
 # serialization options http://stackoverflow.com/questions/2627555/how-to-deserialize-an-object-with-pyyaml-using-safe-load
 
-import yaml
+import persistent
 
-class Operator(yaml.YAMLObject):
+class Operator(persistent.Persistent):
 
     """Model class for a ham radio operator
     
@@ -18,10 +18,8 @@ class Operator(yaml.YAMLObject):
         The operator's surname or family name
     """
 
-    yaml_loader = yaml.SafeLoader
-    yaml_tag = '!Operator'
-    
-    def __init__(self,callsign=None):
+    def __init__(self, callsign=None, firstname=None):
         self.callsign = callsign
         self.firstname = None
         self.lastname = None
+

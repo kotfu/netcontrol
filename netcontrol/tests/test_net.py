@@ -1,45 +1,59 @@
 # Copyright (c) 2017 Jared Crapo, K0TFU
 
 import unittest
-import yaml
+import ZODB
+import transaction
 
 from netcontrol.net import Net
 from netcontrol.operator import Operator
 
 class NetTest(unittest.TestCase):
+    def setUp(self):
+        self.memory_db = ZODB.DB(None)
+        self.connection = self.memory_db.open()
+        self.dbroot = self.connection.root
+        self.dbroot.net = Net()
+        self.net = self.dbroot.net
+        transaction.commit()
+        
     def test_net_operators(self):
-        net = Net()
-        self.assertEqual(0, len(net.operators))
-
         # don't add empty operators
         op = Operator()
-        net.add_operator(op)
-        self.assertEqual(0, len(net.operators))
+        self.net.add_operator(op)
+        self.assertEqual(0, len(self.net.operators))
 
         # add operators with at least a call sign
         op1 = Operator('K0TFU')
-        net.add_operator(op1)
-        self.assertEqual(1, len(net.operators))
+        self.net.add_operator(op1)
+        self.assertEqual(1, len(self.net.operators))
 
         op2 = Operator(callsign='N7RSC')
-        net.add_operator(op2)
-        self.assertEqual(2, len(net.operators))
+        self.net.add_operator(op2)
+        self.assertEqual(2, len(self.net.operators))
         
         # don't add duplicate operators
-        net.add_operator(op1)
-        self.assertEqual(2, len(net.operators))
+        self.net.add_operator(op1)
+        self.assertEqual(2, len(self.net.operators))
         
-    def test_net_dump(self):
-        net = Net()
+    def test_net_transaction_abort(self):
+        self.assertEqual(0, len(self.net.operators))
+        transaction.commit()
+        
         op1 = Operator(callsign='K0TFU')
-        net.add_operator(op1)
+        self.net.add_operator(op1)
         op2 = Operator()
         op2.callsign = 'N7RSC'
-        net.add_operator(op2)
-        txt = yaml.dump(net)
+        self.net.add_operator(op2)
+        transaction.abort()
         
-        newnet = yaml.safe_load(txt)
-        self.assertEqual(2, len(net.operators))
-        self.assertEqual('N7RSC', net.operators['N7RSC'].callsign)
+        self.assertEqual(0, len(self.net.operators))
+
+    def test_net_transaction_commit(self):
+        op1 = Operator(callsign='K0TFU')
+        self.net.add_operator(op1)
+        op2 = Operator()
+        op2.callsign = 'N7RSC'
+        self.net.add_operator(op2)
+        transaction.commit()
         
-        
+        self.assertEqual(2, len(self.net.operators))

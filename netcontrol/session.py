@@ -1,8 +1,9 @@
 # Copyright (c) 2017 Jared Crapo, K0TFU
 
-import yaml
+import persistent
+import persistent.mapping
 
-class Session(yaml.YAMLObject):
+class Session(persistent.Persistent):
 
     """Model class for a single session of a directed ham radio net
     
@@ -20,16 +21,13 @@ class Session(yaml.YAMLObject):
         The amateur operators who have checked in to this net
 
     """
-
-    yaml_loader = yaml.SafeLoader
-    yaml_tag = '!Session'
     
     def __init__(self,net):
         self.net = net
         self.net_control_station = None
         self.frequency = None
         self.start = None
-        self.operators = {}
+        self.operators = persistent.mapping.PersistentMapping()
 
     def checkin(self,operator):
         # don't add operators without a callsign
