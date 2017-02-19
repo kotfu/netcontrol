@@ -1,0 +1,58 @@
+# Net Control
+Cross platform software to streamline the management of ham radio nets. Initial focus is for local ARES style nets.
+
+## Infrastructure
+
+Python
+PyQT - cross platform gui toolkit
+Persist the data using ZODB. One file on disk per net.
+
+setuptools and cx_Freeze or PyInstaller for native packaging
+
+## Features
+
+### Net Setup
+ * Keep the roster (or member list) of a particular net stored in a file somewhere
+ * allow add/update/delete members
+ * set up zones/regions for the net, link members to zones
+ * text field to capture schedule, frequency, etc
+ * text field for net introduction script, i.e. what you read when you open the net, or close the net. Support markdown here?
+
+### Plan a net
+ * announcements
+ * scheduled date/time of start
+
+
+### Start a net
+ * net control operator callsign
+ * Run a count up timer that shows how long since net control identified
+ * start time
+ * end time
+ * Show the intro script stuff for the net control to read
+
+### Checkin
+ * go around the horn by zone
+ * call sign - lookup to net members, easy way to add to roster if not present in roster, should allow checkins of people who aren't in the roster
+ * auto populate time checked in, confirm zone from roster or allow override
+ * capture whether they have traffic, and what type of traffic
+
+### Net display
+* show how long its been running, in minutes
+* show list of checked in calls and their name, and whether they have traffic
+* sort/group by zone/region
+* sort/group by traffic
+
+### traffic capture
+ * which call sign it's from
+ * the traffic
+
+### close the net
+ * time we closed the net
+
+### net report
+ * turn all the captured data into a plain text/markdown file that is the net report
+ * total checkins by zone
+ * checkin list
+ * traffic passed
+ * etc
+
