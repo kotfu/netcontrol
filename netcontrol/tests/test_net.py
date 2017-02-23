@@ -15,8 +15,12 @@ class NetTest(unittest.TestCase):
         self.dbroot.net = Net()
         self.net = self.dbroot.net
         transaction.commit()
+
+    def test_new_session(self):
+        s = self.net.new_session()
+        self.assertEqual(1, len(self.net.sessions))
         
-    def test_net_operators(self):
+    def test_operators(self):
         # don't add empty operators
         op = Operator()
         self.net.add_operator(op)
@@ -35,7 +39,7 @@ class NetTest(unittest.TestCase):
         self.net.add_operator(op1)
         self.assertEqual(2, len(self.net.operators))
         
-    def test_net_transaction_abort(self):
+    def test_transaction_abort(self):
         self.assertEqual(0, len(self.net.operators))
         transaction.commit()
         
@@ -48,7 +52,7 @@ class NetTest(unittest.TestCase):
         
         self.assertEqual(0, len(self.net.operators))
 
-    def test_net_transaction_commit(self):
+    def test_transaction_commit(self):
         op1 = Operator(callsign='K0TFU')
         self.net.add_operator(op1)
         op2 = Operator()

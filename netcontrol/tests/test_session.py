@@ -1,14 +1,13 @@
 # Copyright (c) 2017 Jared Crapo, K0TFU
 
 import unittest
-import yaml
 
 from netcontrol.net import Net
 from netcontrol.session import Session
 from netcontrol.operator import Operator
 
 class SessionTest(unittest.TestCase):
-    def test_session_operators(self):
+    def test_checkin(self):
         
         # setup a net with one known operator
         net = Net()
@@ -23,10 +22,12 @@ class SessionTest(unittest.TestCase):
         op = Operator()
         session.checkin(op)
         self.assertEqual(0, len(session.operators))
+        self.assertEqual(0, len(session.events))
 
         # add operators with at least a call sign
         session.checkin(op1)
         self.assertEqual(1, len(session.operators))
+        self.assertEqual(1, len(session.events))
         
         # op1 was already known to the net, so net operators
         # shouldn't have changed
@@ -38,10 +39,11 @@ class SessionTest(unittest.TestCase):
         session.checkin(op2)
         self.assertEqual(2, len(session.operators))
         self.assertEqual(2, len(net.operators))
+        self.assertEqual(2, len(session.events))
         
-        # make sure 
-        # don't add duplicate operators
+        # don't add duplicate operators to the list of operators
+        # but do create a new checkin event
         session.checkin(op1)
         self.assertEqual(2, len(session.operators))
         self.assertEqual(2, len(net.operators))
-        
+        self.assertEqual(3, len(session.events))
