@@ -30,6 +30,7 @@ class Net(persistent.Persistent):
     """
 
     def __init__(self):
+        # TODO explore @property for these
         self.name = None
         self.schedule = None
         self.frequency = None
