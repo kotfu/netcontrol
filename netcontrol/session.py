@@ -1,5 +1,6 @@
 # Copyright (c) 2017 Jared Crapo, K0TFU
 
+import datetime
 import persistent
 import persistent.mapping
 
@@ -29,7 +30,7 @@ class Session(persistent.Persistent):
         self.net = net
         self.net_control_station = None
         self.frequency = None
-        self.start = None
+        self.start_datetime = None
         self.operators = persistent.mapping.PersistentMapping()
         self.events = persistent.list.PersistentList()
 
@@ -41,3 +42,6 @@ class Session(persistent.Persistent):
             self.events.append(Checkin(operator))
             # add this operator to the net if they aren't there
             self.net.add_operator(operator)
+
+    def start(self):
+        self.start_datetime = datetime.datetime.now()

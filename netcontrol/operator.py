@@ -13,7 +13,7 @@ class Operator(persistent.Persistent):
     callsign: str
         The operators FCC issued call sign
     firstname: str
-        The operator's first given name
+        The operator's given name(s)
     lastname: str
         The operator's surname or family name
     """
